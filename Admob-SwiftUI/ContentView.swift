@@ -7,10 +7,30 @@
 //
 
 import SwiftUI
+import GoogleMobileAds
 
 struct ContentView: View {
+    
+    @State var rewarded : GADRewardBasedVideoAd!
+    
     var body: some View {
-        Text("Hello, World!")
+     
+        Button(action: {
+            
+            if self.rewarded.isReady {
+            
+            let root = UIApplication.shared.windows.first?.rootViewController
+                self.rewarded.present(fromRootViewController: root!)
+            }
+        }) {
+            Text("show")
+        }.onAppear {
+            
+            self.rewarded = GADRewardBasedVideoAd()
+            let req =  GADRequest()
+            self.rewarded.load(req, withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
+            
+        }
     }
 }
 
@@ -19,3 +39,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
